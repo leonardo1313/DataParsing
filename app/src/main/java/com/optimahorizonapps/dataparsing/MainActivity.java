@@ -20,20 +20,32 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
-    RequestQueue queue;
+//    RequestQueue queue;
+    TextView textView;
     String url = "https://ww.google.com";
     String apiUrl = "https://jsonplaceholder.typicode.com/todos";
     String apiObjectUrl = "https://jsonplaceholder.typicode.com/todos/1";
 
+    RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        queue = Volley.newRequestQueue(this);
-        TextView textView = findViewById(R.id.main_textView);
+        queue = MySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
 
+//        queue = Volley.newRequestQueue(this);
+         textView = findViewById(R.id.main_textView);
+
+//        JsonObjectRequest(textView);
+
+        getJsonArrayRequest();
+
+//        getString();
+    }
+
+    private void JsonObjectRequest(TextView textView) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, apiObjectUrl, null,
                 response -> {
                     try {
@@ -46,11 +58,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("JSONObject", "onCreate: Failed!");
                 });
 
-        queue.add(jsonObjectRequest);
-
-//        getJsonArrayRequest();
-
-//        getString();
+//        queue.add(jsonObjectRequest);
     }
 
     private void getJsonArrayRequest() {
@@ -71,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 });
 
         queue.add(jsonArrayRequest);
+//        queue.add(jsonArrayRequest);
     }
 
     private void getString() {
@@ -83,6 +92,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // add the request to RequestQueue
-        queue.add(stringRequest);
+//        queue.add(stringRequest);
     }
 }
